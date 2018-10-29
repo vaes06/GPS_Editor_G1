@@ -16,9 +16,11 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JScrollBar;
+import javax.swing.JFileChooser;
 
 public class EditorWindow {
 
@@ -75,7 +77,8 @@ public class EditorWindow {
 		JMenuItem mntmAbrir = new JMenuItem("Abrir");
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mensaje();
+				//mensaje();
+				
 			}
 		});
 		mnNewMenu.add(mntmAbrir);
@@ -83,7 +86,15 @@ public class EditorWindow {
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mensaje();
+				//mensaje();
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setDialogTitle("Specify a file to save"); 
+				int userSelection = fileChooser.showSaveDialog(frmEditor);
+				 
+				if (userSelection == JFileChooser.APPROVE_OPTION) {
+				    File fileToSave = fileChooser.getSelectedFile();
+				    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+				}
 			}
 		});
 		mnNewMenu.add(mntmGuardar);
@@ -143,7 +154,9 @@ public class EditorWindow {
 		JScrollBar scrollBar_1 = new JScrollBar();
 		scrollBar_1.setOrientation(JScrollBar.HORIZONTAL);
 		frmEditor.getContentPane().add(scrollBar_1, BorderLayout.SOUTH);
-	
+		
+		//Add JChoose
+		
 		
 	}
 	private void mensaje() {
