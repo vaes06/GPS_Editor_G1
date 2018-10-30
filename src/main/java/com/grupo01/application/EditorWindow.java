@@ -86,11 +86,11 @@ public class EditorWindow {
 		frmEditor.setJMenuBar(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Archivo");
-		mnNewMenu.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\home.gif"));
+		mnNewMenu.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/home.gif")));
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
-		mntmNuevo.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\new.png"));
+		mntmNuevo.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/new.png")));
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EditorWindow window = null;
@@ -115,7 +115,7 @@ public class EditorWindow {
 		mnNewMenu.add(mntmNuevo);
 		
 		JMenuItem mntmAbrir = new JMenuItem("Abrir");
-		mntmAbrir.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\open.png"));
+		mntmAbrir.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/open.png")));
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//mensaje();
@@ -125,7 +125,7 @@ public class EditorWindow {
 		mnNewMenu.add(mntmAbrir);
 		
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
-		mntmGuardar.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\save.png"));
+		mntmGuardar.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -155,7 +155,7 @@ public class EditorWindow {
 		mnNewMenu.add(mntmEnConstruccin_1);
 		
 		JMenu mnFormato = new JMenu("Formato");
-		mnFormato.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\themes.gif"));
+		mnFormato.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/themes.gif")));
 		menuBar.add(mnFormato);
 		
 		JMenuItem mntmTamaoDeLetra = new JMenuItem("Tamaño de letra");
@@ -175,7 +175,7 @@ public class EditorWindow {
 		mnFormato.add(mntmFormatoDeLetra);
 		
 		JMenu mnCerrar = new JMenu("Cerrar");
-		mnCerrar.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\exit.gif"));
+		mnCerrar.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/exit.gif")));
 		menuBar.add(mnCerrar);
 		
 		JMenuItem mntmEnConstruccin = new JMenuItem("En construcción...");
@@ -204,7 +204,7 @@ public class EditorWindow {
 			}
 		});
 		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\save.png"));
+		btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
 		toolBar.add(btnNewButton);
 		
 
