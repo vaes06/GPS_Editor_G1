@@ -16,16 +16,28 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.TextArea;
+
 import javax.swing.JScrollBar;
 import javax.swing.JFileChooser;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class EditorWindow {
 
 	private JFrame frmEditor;
-
+	private JTextArea textArea;
+	private JButton btnGuardar;
+	private JMenu mnNewMenu;
+	private JMenuItem mntmGuardarComo;
+	private String localPath;
+	private final Action action = new SwingAction();
 	/**
 	 * Launch the application.
 	 */
@@ -53,16 +65,20 @@ public class EditorWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		localPath = "";
+		
 		frmEditor = new JFrame();
 		frmEditor.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
 		frmEditor.setTitle("Editor 3000");
 		frmEditor.setBounds(100, 100, 744, 582);
 		frmEditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
+		
 		JMenuBar menuBar = new JMenuBar();
 		frmEditor.setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Archivo");
+		mnNewMenu = new JMenu("Archivo");
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
@@ -74,7 +90,7 @@ public class EditorWindow {
 		});
 		mnNewMenu.add(mntmNuevo);
 		
-		JMenuItem mntmAbrir = new JMenuItem("Abrir");
+		JMenuItem mntmAbrir = new JMenuItem("Abrir ...");
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//mensaje();
@@ -86,7 +102,30 @@ public class EditorWindow {
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(localPath.isEmpty()) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Specify a file to save"); 
+					int userSelection = fileChooser.showSaveDialog(frmEditor);
+					 
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+					    File fileToSave = fileChooser.getSelectedFile();
+					    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+					    localPath = fileToSave.getAbsolutePath();
+					    saveFile(textArea.getText(), localPath);					    
+					}
+				}else {
+					saveFile(textArea.getText(),localPath);
+				}
 				//mensaje();
+				
+			}
+		});
+		mnNewMenu.add(mntmGuardar);
+		
+		mntmGuardarComo = new JMenuItem("Guardar como ...");
+		mntmGuardarComo.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setDialogTitle("Specify a file to save"); 
 				int userSelection = fileChooser.showSaveDialog(frmEditor);
@@ -94,17 +133,19 @@ public class EditorWindow {
 				if (userSelection == JFileChooser.APPROVE_OPTION) {
 				    File fileToSave = fileChooser.getSelectedFile();
 				    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+				    localPath = fileToSave.getAbsolutePath();
+				    if(fileToSave.exists() && !fileToSave.isDirectory()) {
+				    	int dialogButton = JOptionPane.YES_NO_OPTION;
+						JOptionPane.showConfirmDialog(null,"¿Está seguro que desea reemplazar el archivo existente?","Warning", dialogButton);
+						if (dialogButton == JOptionPane.YES_OPTION) saveFile(textArea.getText(), localPath);		 
+				    }
+				    else 
+				    	saveFile(textArea.getText(), localPath);		   			    
 				}
+				
 			}
 		});
-		mnNewMenu.add(mntmGuardar);
-		
-		JSeparator separator = new JSeparator();
-		mnNewMenu.add(separator);
-		
-		JMenuItem mntmEnConstruccin_1 = new JMenuItem("En construcción...");
-		mntmEnConstruccin_1.setForeground(Color.BLUE);
-		mnNewMenu.add(mntmEnConstruccin_1);
+		mnNewMenu.add(mntmGuardarComo);
 		
 		JMenu mnFormato = new JMenu("Formato");
 		menuBar.add(mnFormato);
@@ -135,17 +176,32 @@ public class EditorWindow {
 		JToolBar toolBar = new JToolBar();
 		frmEditor.getContentPane().add(toolBar, BorderLayout.NORTH);
 		
-		JButton btnNewButton = new JButton("Guardar");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnGuardar = new JButton("Guardar");
+		btnGuardar.setHorizontalAlignment(SwingConstants.TRAILING);
+		btnGuardar.setAction(action);
+		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mensaje();
+				if(localPath.isEmpty()) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Specify a file to save"); 
+					int userSelection = fileChooser.showSaveDialog(frmEditor);
+					 
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+					    File fileToSave = fileChooser.getSelectedFile();
+					    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+					    localPath = fileToSave.getAbsolutePath();
+					    saveFile(textArea.getText(), localPath);
+					}
+				}else {
+					saveFile(textArea.getText(),localPath);
+				}
 			}
 		});
-		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton.setIcon(new ImageIcon("D:\\Personal\\MAESTRIA\\ADSW\\GPS_Editor_G1\\src\\main\\resources\\icons\\save-icon.png"));
-		toolBar.add(btnNewButton);
+		btnGuardar.setIcon(new ImageIcon("D:\\Personal\\MAESTRIA\\ADSW\\GPS_Editor_G1\\src\\main\\resources\\icons\\save-icon.png"));
+		toolBar.add(btnGuardar);
 		
-		JTextArea textArea = new JTextArea();
+		//JTextArea 
+		textArea = new JTextArea();
 		frmEditor.getContentPane().add(textArea, BorderLayout.CENTER);
 		
 		JScrollBar scrollBar = new JScrollBar();
@@ -161,5 +217,49 @@ public class EditorWindow {
 	}
 	private void mensaje() {
 		JOptionPane.showMessageDialog(null, "Opción disponible en el siguiente entregable","Trabajamos para ti...!", 1);
+	}
+	
+	private void showMessage(String message) {
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		JOptionPane.showConfirmDialog(null,message,"Warning", dialogButton);
+	}
+	private boolean saveFile(String content, String path) {
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		
+		try {
+			
+			fw = new FileWriter(path);
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+			
+			return true;
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}finally {
+			try {
+
+				if (bw != null)
+					bw.close();
+
+				if (fw != null)
+					fw.close();
+				return true;
+
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+				return false;
+			}
+		}
+	}
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
 	}
 }
