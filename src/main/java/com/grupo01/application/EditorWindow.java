@@ -77,25 +77,7 @@ public class EditorWindow {
 		mntmNuevo.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/new.png")));
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				EditorWindow window = null;
-				try {
-					window = new EditorWindow();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnsupportedLookAndFeelException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				window.frmEditor.setVisible(true);
-			}
+				Editor_funciones.nuevo(textArea);			}
 		});
 		mnNewMenu.add(mntmNuevo);
 		
