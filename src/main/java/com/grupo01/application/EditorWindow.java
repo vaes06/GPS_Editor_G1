@@ -2,32 +2,16 @@ package com.grupo01.application;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
+import com.grupo01.service.Editor_funciones;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JTextArea;
-import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
+
 
 public class EditorWindow {
 
@@ -93,6 +77,7 @@ public class EditorWindow {
 		mntmNuevo.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/new.png")));
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				EditorWindow window = null;
 				try {
 					window = new EditorWindow();
@@ -118,8 +103,7 @@ public class EditorWindow {
 		mntmAbrir.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/open.png")));
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//mensaje();
-				
+				//mensaje();				
 			}
 		});
 		mnNewMenu.add(mntmAbrir);
@@ -128,21 +112,7 @@ public class EditorWindow {
 		mntmGuardar.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				//JOptionPane.showMessageDialog(null,"Recuerda ");
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int result= fileChooser.showSaveDialog(frmEditor);
-				if (result== JFileChooser.CANCEL_OPTION) return;
-					File name= fileChooser.getSelectedFile();
-					try {
-						PrintWriter output= new PrintWriter(new FileWriter( name));
-						output.write(textArea.getText());
-						output.close();
-					}
-					catch (IOException ioException) {
-						JOptionPane.showMessageDialog(null,"Error en el archivo","Error",JOptionPane.ERROR_MESSAGE);
-					}
+				Editor_funciones.guardar(frmEditor,textArea);				
 			}
 		});
 		mnNewMenu.add(mntmGuardar);
@@ -161,7 +131,7 @@ public class EditorWindow {
 		JMenuItem mntmTamaoDeLetra = new JMenuItem("Tamaño de letra");
 		mntmTamaoDeLetra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mensaje();
+				Editor_funciones.mensaje();
 			}
 		});
 		mnFormato.add(mntmTamaoDeLetra);
@@ -169,7 +139,7 @@ public class EditorWindow {
 		JMenuItem mntmFormatoDeLetra = new JMenuItem("Formato de letra");
 		mntmFormatoDeLetra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mensaje();
+				Editor_funciones.mensaje();
 			}
 		});
 		mnFormato.add(mntmFormatoDeLetra);
@@ -188,19 +158,7 @@ public class EditorWindow {
 		JButton btnNewButton = new JButton("Guardar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int result= fileChooser.showSaveDialog(frmEditor);
-				if (result== JFileChooser.CANCEL_OPTION) return;
-					File name= fileChooser.getSelectedFile();
-					try {
-						PrintWriter output= new PrintWriter(new FileWriter( name));
-						output.write(textArea.getText());
-						output.close();
-					}
-					catch (IOException ioException) {
-						JOptionPane.showMessageDialog(null,"Error en el archivo","Error",JOptionPane.ERROR_MESSAGE);
-					}
+				Editor_funciones.guardar(frmEditor,textArea);
 			}
 		});
 		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -214,8 +172,5 @@ public class EditorWindow {
 
 
 		
-	}
-	private void mensaje() {
-		JOptionPane.showMessageDialog(null, "Opción disponible en el siguiente entregable","Trabajamos para ti...!", 1);
-	}
+	}	
 }
