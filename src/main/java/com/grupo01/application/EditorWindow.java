@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 
 public class EditorWindow {
 
@@ -117,7 +118,8 @@ public class EditorWindow {
 		mntmAbrir.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\open.png"));
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mensaje();
+				//mensaje();
+				
 			}
 		});
 		mnNewMenu.add(mntmAbrir);
@@ -126,6 +128,7 @@ public class EditorWindow {
 		mntmGuardar.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\save.png"));
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				//JOptionPane.showMessageDialog(null,"Recuerda ");
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -204,8 +207,12 @@ public class EditorWindow {
 		btnNewButton.setIcon(new ImageIcon("C:\\Users\\Ada y Jhoss\\Downloads\\JTattooDemo-sources\\JTattooDemo\\src\\main\\java\\com\\jtattoo\\demo\\images\\save.png"));
 		toolBar.add(btnNewButton);
 		
-		
-	
+
+		JScrollBar scrollBar_1 = new JScrollBar();
+		scrollBar_1.setOrientation(JScrollBar.HORIZONTAL);
+		frmEditor.getContentPane().add(scrollBar_1, BorderLayout.SOUTH);
+
+
 		
 	}
 	private void mensaje() {
