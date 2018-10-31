@@ -7,25 +7,16 @@ import javax.swing.*;
 import com.grupo01.service.Editor_funciones;
 
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 import java.awt.Color;
-import javax.swing.JTextArea;
-import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.TextArea;
-
-import javax.swing.JScrollBar;
-import javax.swing.JFileChooser;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 
 public class EditorWindow {
 
@@ -35,7 +26,7 @@ public class EditorWindow {
 	private JMenu mnNewMenu;
 	private JMenuItem mntmGuardarComo;
 	private String localPath;
-	private final Action action = new SwingAction();
+	//private final Action action = new SwingAction();
 	/**
 	 * Launch the application.
 	 */
@@ -59,16 +50,20 @@ public class EditorWindow {
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	public EditorWindow() {
+	public EditorWindow() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
-	private void initialize() {
+	private void initialize() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		localPath = "";
-		
+		 
 		frmEditor = new JFrame();
 		frmEditor.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
 		frmEditor.setTitle("Editor 3000");
@@ -87,6 +82,7 @@ public class EditorWindow {
 		frmEditor.setJMenuBar(menuBar);
 		
 		mnNewMenu = new JMenu("Archivo");
+		mnNewMenu.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/home.gif")));
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
@@ -110,7 +106,23 @@ public class EditorWindow {
 		mntmGuardar.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Editor_funciones.guardar(frmEditor,textArea);				
+				//Editor_funciones.guardar(frmEditor,textArea);				
+				if(localPath.isEmpty()) {
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setDialogTitle("Guarda tu trabajo"); 
+					fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+					int userSelection = fileChooser.showSaveDialog(frmEditor);
+					 
+					if (userSelection == JFileChooser.CANCEL_OPTION) return;
+				    
+					File fileToSave = fileChooser.getSelectedFile();
+				    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+				    localPath = fileToSave.getAbsolutePath();
+				    saveFile(textArea.getText(), localPath);					    
+					
+				}else {
+					saveFile(textArea.getText(),localPath);
+				}
 			}
 		});
 		mnNewMenu.add(mntmGuardar);
@@ -120,21 +132,21 @@ public class EditorWindow {
 			
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setDialogTitle("Specify a file to save"); 
+				fileChooser.setDialogTitle("Guarda tu trabajo"); 
 				int userSelection = fileChooser.showSaveDialog(frmEditor);
 				 
-				if (userSelection == JFileChooser.APPROVE_OPTION) {
-				    File fileToSave = fileChooser.getSelectedFile();
-				    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-				    localPath = fileToSave.getAbsolutePath();
-				    if(fileToSave.exists() && !fileToSave.isDirectory()) {
-				    	int dialogButton = JOptionPane.YES_NO_OPTION;
-						JOptionPane.showConfirmDialog(null,"¿Está seguro que desea reemplazar el archivo existente?","Warning", dialogButton);
-						if (dialogButton == JOptionPane.YES_OPTION) saveFile(textArea.getText(), localPath);		 
-				    }
-				    else 
-				    	saveFile(textArea.getText(), localPath);		   			    
-				}
+				if (userSelection == JFileChooser.CANCEL_OPTION) return;
+			    
+				File fileToSave = fileChooser.getSelectedFile();
+			    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+			    localPath = fileToSave.getAbsolutePath();
+			    if(fileToSave.exists() && !fileToSave.isDirectory()) {
+			    	int dialogButton = JOptionPane.YES_NO_OPTION;
+					JOptionPane.showConfirmDialog(null,"¿Está seguro que desea reemplazar el archivo existente?","Warning", dialogButton);
+					if (dialogButton == JOptionPane.YES_OPTION) saveFile(textArea.getText(), localPath);		 
+			    }
+			    else 
+			    	saveFile(textArea.getText(), localPath);		   			    
 				
 			}
 		});
@@ -173,15 +185,15 @@ public class EditorWindow {
 		
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setHorizontalAlignment(SwingConstants.TRAILING);
-		btnGuardar.setAction(action);
+		//btnGuardar.setAction(action);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Editor_funciones.guardar(frmEditor,textArea);
 			}
 		});
-		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
-		toolBar.add(btnNewButton);
+		//btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
+		//btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
+		//toolBar.add(btnNewButton);
 		
 
 		JScrollBar scrollBar_1 = new JScrollBar();
@@ -191,4 +203,35 @@ public class EditorWindow {
 
 		
 	}	
+	private boolean saveFile(String content, String path) {
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		
+		try {
+			
+			fw = new FileWriter(path);
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+			
+			return true;
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}finally {
+			try {
+
+				if (bw != null)
+					bw.close();
+
+				if (fw != null)
+					fw.close();
+				return true;
+
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+				return false;
+			}
+		}
+	}
 }

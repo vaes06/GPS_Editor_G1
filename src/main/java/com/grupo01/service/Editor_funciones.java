@@ -36,17 +36,48 @@ public class Editor_funciones {
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int result= fileChooser.showSaveDialog(frmEditor);
 		if (result== JFileChooser.CANCEL_OPTION) return;
-			File name= fileChooser.getSelectedFile();
-			try {
-				PrintWriter output= new PrintWriter(new FileWriter( name));
-				output.write(textArea.getText());
-				output.close();
-			}
-			catch (IOException ioException) {
-				JOptionPane.showMessageDialog(null,"Error en el archivo","Error",JOptionPane.ERROR_MESSAGE);
-			}
+		
+		File name= fileChooser.getSelectedFile();
+		try {
+			PrintWriter output= new PrintWriter(new FileWriter( name));
+			output.write(textArea.getText());
+			output.close();
+		}
+		catch (IOException ioException) {
+			JOptionPane.showMessageDialog(null,"Error en el archivo","Error",JOptionPane.ERROR_MESSAGE);
+		}
 	}
-	
+	private boolean saveFile(String content, String path) {
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+		
+		try {
+			
+			fw = new FileWriter(path);
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+			
+			return true;
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}finally {
+			try {
+
+				if (bw != null)
+					bw.close();
+
+				if (fw != null)
+					fw.close();
+				return true;
+
+			} catch (final IOException ex) {
+				ex.printStackTrace();
+				return false;
+			}
+		}
+	}
 	
 	
 }
