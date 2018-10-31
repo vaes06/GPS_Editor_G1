@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+	
+	<bean id="helloBean" class="com.grupo01.model.HelloWorld">
+		<property name="name" value="Grupo01"></property>
+	</bean>
+	<bean id="HelloWorld" class="com.grupo01.service.HelloWorldService">
+		<property name="helloWorldRepository" ref="HelloWorldRepository"></property>
+	</bean>
+	<bean id="HelloWorldRepository" class="com.grupo01.dao.HelloWorldRepository"/>
+	
+	<bean id="person" class="com.grupo01.model.Person">
+		<property name="name" value="Grupo01"></property>
+	</bean>
+</beans>

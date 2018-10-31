@@ -7,6 +7,7 @@ import com.grupo01.service.HelloWorldService;
 
 public class App {
 	public static void main(String[] args) {
+		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
 		//HelloWorld obj = ctx.getBean(HelloWorld.class);
 		//obj.printHello();
