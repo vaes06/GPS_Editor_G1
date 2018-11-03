@@ -97,7 +97,8 @@ public class EditorWindow {
 		mntmAbrir.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/open.png")));
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//mensaje();				
+				//mensaje();	
+				textArea.setText(Editor_funciones.guardar(frmEditor,textArea));
 			}
 		});
 		mnNewMenu.add(mntmAbrir);
@@ -128,6 +129,7 @@ public class EditorWindow {
 		mnNewMenu.add(mntmGuardar);
 		
 		mntmGuardarComo = new JMenuItem("Guardar como ...");
+		mntmGuardarComo.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/saveas.gif")));
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {

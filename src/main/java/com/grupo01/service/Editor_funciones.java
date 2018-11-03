@@ -30,22 +30,37 @@ public class Editor_funciones {
 		
 	}	
 	
-	public static void guardar(JFrame frmEditor, JTextArea textArea) {
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("Guarda tu trabajo");
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int result= fileChooser.showSaveDialog(frmEditor);
-		if (result== JFileChooser.CANCEL_OPTION) return;
-		
-		File name= fileChooser.getSelectedFile();
-		try {
-			PrintWriter output= new PrintWriter(new FileWriter( name));
-			output.write(textArea.getText());
-			output.close();
-		}
-		catch (IOException ioException) {
-			JOptionPane.showMessageDialog(null,"Error en el archivo","Error",JOptionPane.ERROR_MESSAGE);
-		}
+	public static String guardar(JFrame frmEditor, JTextArea textArea) {
+		String aux="";   
+		  String texto = "";
+		  try
+		  {
+		   /**llamamos el metodo que permite cargar la ventana*/
+		   JFileChooser file=new JFileChooser();
+		   file.showOpenDialog(frmEditor);
+		   /**abrimos el archivo seleccionado*/
+		   File abre=file.getSelectedFile();
+		 
+		   /**recorremos el archivo, lo leemos para plasmarlo
+		   *en el area de texto*/
+		   if(abre!=null)
+		   {     
+		      FileReader archivos=new FileReader(abre);
+		      BufferedReader lee=new BufferedReader(archivos);
+		      while((aux=lee.readLine())!=null)
+		      {
+		         texto+= aux+ "\n";
+		      }
+		         lee.close();
+		    }    
+		   }
+		   catch(IOException ex)
+		   {
+		     JOptionPane.showMessageDialog(null,ex+"" +
+		           "\nNo se ha encontrado el archivo",
+		                 "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
+		    }
+		  return texto;
 	}
 	private boolean saveFile(String content, String path) {
 		BufferedWriter bw = null;
