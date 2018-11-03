@@ -191,14 +191,6 @@ public class EditorWindow {
 				Editor_funciones.guardar(frmEditor,textArea);
 			}
 		});
-		//btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		//btnNewButton.setIcon(new ImageIcon(EditorWindow.class.getResource("/images/save.png")));
-		//toolBar.add(btnNewButton);
-		
-
-		JScrollBar scrollBar_1 = new JScrollBar();
-		scrollBar_1.setOrientation(JScrollBar.HORIZONTAL);
-		frmEditor.getContentPane().add(scrollBar_1, BorderLayout.SOUTH);
 
 
 		
